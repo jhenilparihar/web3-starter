@@ -33,6 +33,7 @@ class App extends Component {
       const contract = await getContract();
       const something = await contract.methods.balanceOf(account).call();
       console.log(something);
+      this.setState({ loading: false });
     } else {
       this.setState({ metamaskConnected: false });
     }
@@ -41,10 +42,10 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        {this.state.loading ? (
-          <Loading />
-        ) : !this.state.metamaskConnected ? (
+        {!this.state.metamaskConnected ? (
           <ConnectToMetamask connectToMetamask={connectToMetamask} />
+        ) : this.state.loading ? (
+          <Loading />
         ) : (
           <h1 className="text-3xl font-bold underline">Hello world!</h1>
         )}
